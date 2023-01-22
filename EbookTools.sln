@@ -9,8 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EbookTools.Translate", "Ebo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EbookTools.FileManipulation", "EbookTools.FileManipulation\EbookTools.FileManipulation.csproj", "{BBBB171D-CD0C-48ED-9DF2-C456FBB4FAC5}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Third Parties", "Third Parties", "{FFB81943-6D11-4A20-9DD8-26905262C27D}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EbookTools.LanguageTools", "EbookTools.LanguageTools\EbookTools.LanguageTools.csproj", "{C9089F85-48AB-4CC6-A8E1-73F9CCA3D158}"
 EndProject
 Global
