@@ -1,0 +1,57 @@
+/* /Components/Preview.razor.rz.scp.css */
+
+.preview-tooltip[data-title]:not([data-title=""])[b-43veh7l3xw] {
+  position: relative;
+  display: inline-block;
+}
+.preview-tooltip[data-title]:not([data-title=""])[b-43veh7l3xw]::before,
+.preview-tooltip[data-title]:not([data-title=""])[b-43veh7l3xw]::after {
+  position: absolute;
+  display: block;
+  top: -5px;
+  left: 50%;
+  z-index: 1070;
+  opacity: 0;
+  transition: opacity 0.15s linear;
+}
+.preview-tooltip[data-title]:not([data-title=""])[b-43veh7l3xw]::before {
+  content: "";
+  transform: translateX(-50%);
+  border-width: 5px 5px 0 5px;
+  border-style: solid;
+  border-color: #000 transparent transparent transparent;
+}
+.preview-tooltip[data-title]:not([data-title=""])[b-43veh7l3xw]::after {
+  content: attr(data-title);
+  transform: translateX(-50%) translateY(-100%);
+  font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.6;
+  line-break: auto;
+  text-align: left;
+  text-align: start;
+  text-decoration: none;
+  text-shadow: none;
+  text-transform: none;
+  letter-spacing: normal;
+  word-break: normal;
+  word-spacing: normal;
+  word-wrap: normal;
+  white-space: normal;
+  font-size: 12px;
+  max-width: 200px;
+  padding: 3px 8px;
+  color: #fff;
+  text-align: center;
+  background-color: #000;
+  border-radius: 0px;
+  min-width: 150px;
+  pointer-events: none;
+}
+.preview-tooltip[data-title]:not([data-title=""]):hover[b-43veh7l3xw]::before,
+.preview-tooltip[data-title]:not([data-title=""]):hover[b-43veh7l3xw]::after {
+  opacity: 0.9;
+}
+/* /Shared/MainLayout.razor.rz.scp.css */
+/* /Shared/NavMenu.razor.rz.scp.css */
