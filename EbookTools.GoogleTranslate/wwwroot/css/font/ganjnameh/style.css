@@ -1,0 +1,7 @@
+@font-face {
+    font-family: 'GanjNameh';
+    font-style: normal;
+    font-weight: 400;
+    src: local('GanjNameh'), local('GanjNameh'), url(GanjNamehSans-Regular.woff) format('truetype');
+}
+.ganjnameh,.ganjnameh * {font-family:'GanjNameh';}

@@ -1,0 +1,52 @@
+﻿@if(_displayState == Display.Show)
+{
+    <div class="progress" style=@(_height > 0  ? $"height: {_height}px;\"": "")>
+        <div class=@($"progress-bar {(_isStriped ? "progress-bar-striped " : "")}{(_isStriped && _isAnimated ? "progress-bar-animated " : "")}{(!string.IsNullOrEmpty(_background) ? _background : "")}")
+             role="progressbar" aria-valuenow="@_valuenow" aria-valuemin="@_valuemin" aria-valuemax="@_valuemax"  style="width: @_valuenow%">@Label</div>
+    </div>    
+}
+
+
+@code {
+    private string _background = string.Empty;
+    private bool _isStriped = false;
+    private bool _isAnimated = false;
+    private int _valuenow = 0;
+    private int _valuemin = 0;
+    private int _valuemax = 100;
+    private int _height = 0;
+    private Display _displayState = Display.Show;
+
+
+    [Parameter]
+    public string Background { set{_background = value;} }
+    [Parameter]
+    public bool IsStriped { set{_isStriped = value;} }
+    [Parameter]
+    public bool IsAnimated { set{_isAnimated = value;} }
+    [Parameter]
+    public int ValueNow { set { _valuenow = value; } }
+    [Parameter]
+    public int ValueMin { set { _valuemin = value; } }
+    [Parameter]
+    public int ValueMax { set { _valuemax = value; } }
+    [Parameter]
+    public int Height { set { _height = value; } }
+    [Parameter]
+    public Display DisplayState { set { _displayState = value; } }
+    [Parameter]
+    public string Label { set; get; }
+
+    public void Show()
+    {
+        _displayState = Display.Show;
+        StateHasChanged();
+    }
+    public void Hide()
+    {
+        _displayState = Display.Hide;
+        StateHasChanged();
+    }
+
+    public enum Display { Show, Hide }
+}

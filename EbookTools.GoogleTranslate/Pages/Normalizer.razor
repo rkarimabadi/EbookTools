@@ -1,0 +1,54 @@
+﻿@page "/normalizer"
+@using EbookTools.FileManipulation
+@using EbookTools.LanguageTools
+@inject IJSRuntime JSRuntime
+@inject IFarsiNormalizer FarsiNormalizer
+@inject IHtmlManipulation HtmlManipulation
+
+<PageTitle>تصحیح نویسه</PageTitle>
+
+<h1>تصحیح نویسه</h1>
+
+<p>این صفحه فایل Html را دریافت می‌کند و با پیمایش فایل، تکه‌های متن را از طریق یک کتابخانه تصحیح می‌کند و دوباره درون فایل جایگذاری می‌کند.</p>
+<div class="row">
+    <div class="col-12">
+        <div class="input-group mb-3">
+          <span class="input-group-text d-none d-md-inline">انتخاب فایل Html:</span>
+          <InputFile class="form-control" OnChange="@chooseHtmlFile" />
+          <button class="btn btn-secondary" type="button" @onclick="TranslateDocument">تصحیح</button>
+        </div>
+    </div>
+    <div class="col-12">
+        <div class="container-fluid" style="text-align:justify">@((MarkupString)outputText)</div>
+    </div>
+</div>
+
+@code {
+    private IBrowserFile inputFile { get; set; }
+    private string outputText { get; set; }
+
+    private void chooseHtmlFile(InputFileChangeEventArgs e)
+    {
+        inputFile = e.File;
+    }
+    private async Task TranslateDocument()
+    {
+        try
+        {
+            var fileStream = inputFile.OpenReadStream();
+            var htmlContent = await HtmlManipulation.LoadHtmlFile(fileStream);
+            //outputText = await HtmlManipulation.TraverseAndDo(htmlContent, FarsiNormalizer.Run);
+            outputText = await HtmlManipulation.TraverseAndDo(htmlContent,wrap);
+
+            await JSRuntime.InvokeAsync<object>("saveFile","translated" + inputFile.Name,outputText);
+        }
+        catch (Exception ex)
+        {
+            outputText = "UI Error:" + ex.Message;
+        }       
+    }
+    private async Task<string> wrap(string text)
+    {
+        return $"<span class=\"preview-tooltip\" data-title=\"{text}\">{await FarsiNormalizer.Run(text)}</span>";
+    }
+}

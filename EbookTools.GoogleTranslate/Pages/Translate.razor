@@ -1,0 +1,67 @@
+﻿@page "/translate"
+@using EbookTools.FileManipulation
+@using EbookTools.GoogleTranslate.Components
+@using EbookTools.LanguageTools
+@using EbookTools.Translate
+@inject IJSRuntime JSRuntime
+@inject ITranslator GoogleTranslate
+@inject IFarsiNormalizer FarsiNormalizer
+@inject IHtmlManipulation HtmlManipulation
+<PageTitle>ترجمه خودکار</PageTitle>
+
+<h1>ترجمه خودکار</h1>
+
+<p>این صفحه فایل Html را دریافت می‌کند و با پیمایش فایل، تکه‌های متن را از طریق سرویس ترجمه گوگل ترجمه و دوباره درون فایل جایگذاری می‌کند.</p>
+<div class="row">
+    <div class="col-12">
+        <div class="input-group mb-3">
+          <span class="input-group-text d-none d-md-inline">انتخاب فایل Html:</span>
+          <InputFile class="form-control" OnChange="@chooseHtmlFile" />
+          <button class="btn btn-secondary" type="button" @onclick="TranslateDocument">ترجمه</button>
+        </div>
+    </div>
+    <div class="col-12"><AppProgressbar ValueNow="_progress" IsStriped="true" IsAnimated="true" /></div>
+    <div class="col-12">
+        <div class="container-fluid" style="text-align:justify">@((MarkupString)outputText)</div>
+    </div>
+</div>
+
+@code {
+    private int _progress = 0;
+    private IBrowserFile inputFile { get; set; }
+    private string outputText { get; set; }
+    private AutoResetEvent callbackSignal = new AutoResetEvent(false);
+    private void chooseHtmlFile(InputFileChangeEventArgs e)
+    {
+        inputFile = e.File;
+        _progress = 0;
+    }
+    private async Task TranslateDocument()
+    {
+
+        try
+        {
+            var fileStream = inputFile.OpenReadStream();
+            var htmlContent = await HtmlManipulation.LoadHtmlFile(fileStream);
+            int TotalNumberOfNodes = 0;
+            int NumberOfVisitedNodes = 0;
+
+            await HtmlManipulation.TraverseAndDo(htmlContent, async (string text) => { TotalNumberOfNodes++;  return text; });            
+            outputText = await HtmlManipulation.TraverseAndDo(htmlContent, async(string text) => { temp(NumberOfVisitedNodes, TotalNumberOfNodes); return await DoTranslate(text); });
+            //await JSRuntime.InvokeAsync<object>("saveFile","translated" + inputFile.Name,outputText);
+        }
+        catch (Exception ex)
+        {
+            outputText = "UI Error:" + ex.Message;
+        };
+    }
+
+    private async Task<string> DoTranslate(string text)
+    {
+        return $"<span contenteditable=\"true\" class=\"preview-tooltip\" data-title=\"{text}\">{await FarsiNormalizer.Run(await GoogleTranslate.Translate(text))}</span>";
+    }
+    private void temp(int NumberOfVisitedNodes , int TotalNumberOfNodes)
+    {
+        NumberOfVisitedNodes++; _progress = NumberOfVisitedNodes / TotalNumberOfNodes * 100;
+    }
+}
