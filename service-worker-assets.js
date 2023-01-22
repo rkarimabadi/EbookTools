@@ -25,7 +25,7 @@
       "url": "_framework\/icudt.dat"
     },
     {
-      "hash": "sha256-4TQg84U30vPR3PNoYofQMeo5AeAcnbklqebtDBAa6qA=",
+      "hash": "sha256-v8NTAPjde8CHc7RbeJH8Kab5W693jJ55fYGNB1Cv2gg=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -33,7 +33,7 @@
       "url": "_framework\/EbookTools.FileManipulation.dll"
     },
     {
-      "hash": "sha256-hgHb9mYV8KKCR9qxzeVQQveAwYOONRBtaOOGyPbidR0=",
+      "hash": "sha256-bIR4wygSZPcC1\/AT2gALI4XZW3k2hBK85Sep+JfTW1Y=",
       "url": "_framework\/EbookTools.GoogleTranslate.dll"
     },
     {
@@ -481,5 +481,5 @@
       "url": "manifest.json"
     }
   ],
-  "version": "yh9kqxO2"
+  "version": "sxG+zalB"
 };
